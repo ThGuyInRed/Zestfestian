@@ -60,12 +60,12 @@
 </head>
 <body>
 
-<h1>Language ↔ English Converter</h1>
+<h1>Zestfestian ↔ English Converter</h1>
 <p>Select direction and enter text below:</p>
 
 <select id="direction">
-  <option value="toEnglish">Custom → English</option>
-  <option value="toCustom">English → Custom</option>
+  <option value="toEnglish">Zestfestian → English</option>
+  <option value="toCustom">English → Zestfestian</option>
 </select>
 
 <textarea id="inputText" placeholder="Type your text here..."></textarea>
@@ -81,7 +81,6 @@
     "X": "E''", "Y": "e''", "Z": "S''"
   };
 
-  // Reverse mapping for the other direction
   const reversed = Object.fromEntries(Object.entries(dictionary).map(([eng, custom]) => [custom, eng]));
 
   function convertText() {
@@ -89,10 +88,8 @@
     const input = document.getElementById("inputText").value;
     let output = input;
 
-    // Pick the correct dictionary
     let mapping = direction === "toEnglish" ? reversed : dictionary;
 
-    // Sort keys by length for multi-character symbols like E' or S''
     const keys = Object.keys(mapping).sort((a, b) => b.length - a.length);
 
     keys.forEach(key => {
