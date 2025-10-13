@@ -64,7 +64,7 @@ button:hover {
 }
 
 #output {
-    margin-top: 14px;
+    margin-top: 20px;
     width: 100%;
     max-width: 720px;
     background: #c8e6c9;
@@ -74,6 +74,7 @@ button:hover {
     min-height: 48px;
     color: #031018;
     font-weight: 500;
+    box-sizing: border-box;
 }
 
 .row {
@@ -85,24 +86,25 @@ button:hover {
 <body>
 <h1>Zestfestian Translator</h1>
 <div class="controls">
-<label>Direction:
-  <select id="direction">
-    <option value="toEnglish">Zestfestian → English</option>
-    <option value="toCustom">English → Zestfestian</option>
-  </select>
-</label>
+  <label>Direction:
+    <select id="direction">
+      <option value="toEnglish">Zestfestian → English</option>
+      <option value="toCustom">English → Zestfestian</option>
+    </select>
+  </label>
 
-<textarea id="inputText" placeholder="Type text here..."></textarea>
+  <textarea id="inputText" placeholder="Type text here..."></textarea>
 
-<div class="row">
-  <button id="convertBtn">Convert</button>
-  <button id="copyBtn">Copy Output</button>
+  <div class="row">
+    <button id="convertBtn">Convert</button>
+    <button id="copyBtn">Copy Output</button>
+  </div>
 </div>
 
 <div id="output"></div>
-</div>
 
 <script>
+// Consonant mapping
 const consonantMap = {
 "B":"Z","C":"z","D":"E","F":"e","G":"S","H":"s",
 "J":"T","K":"t","L":"F","M":"f","N":"E'","P":"e'",
@@ -126,6 +128,7 @@ function englishToZestfestian(text){
   return result;
 }
 
+// Convert Zestfestian → English
 function zestfestianToEnglish(text){
   let result = "";
   let i = 0;
@@ -153,7 +156,6 @@ function zestfestianToEnglish(text){
   }
   return result;
 }
-
 
 document.getElementById("convertBtn").addEventListener("click", ()=>{
   const dir = document.getElementById("direction").value;
