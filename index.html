@@ -1,105 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Zestfestian's Translator</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zestfestian Translator</title>
 <style>
-  body { font-family: Arial, Helvetica, sans-serif; background:#0f1113; color:#e6eef6; display:flex; flex-direction:column; align-items:center; padding:36px; }
-  h1 { color:#7fd1ff; margin:0 0 8px 0; }
-  .controls { width:100%; max-width:720px; }
-  select, textarea, button { width:100%; box-sizing:border-box; font-size:16px; padding:10px; border-radius:8px; border:none; margin-top:10px; }
-  textarea { height:140px; resize:vertical; }
-  button { background:#7fd1ff; color:#031018; font-weight:700; cursor:pointer; }
-  #output { margin-top:14px; width:100%; max-width:720px; background:#121417; padding:14px; border-radius:8px; white-space:pre-wrap; min-height:48px; }
-  .row { display:flex; gap:10px; }
+body { font-family: Arial, sans-serif; background:#0f1113; color:#e6eef6; display:flex; flex-direction:column; align-items:center; padding:36px; }
+h1 { color:#7fd1ff; margin-bottom:8px; }
+.controls { width:100%; max-width:720px; }
+select, textarea, button { width:100%; font-size:16px; padding:10px; border-radius:8px; border:none; margin-top:10px; box-sizing:border-box; }
+textarea { height:140px; resize:vertical; }
+button { background:#7fd1ff; color:#031018; font-weight:700; cursor:pointer; }
+#output { margin-top:14px; width:100%; max-width:720px; background:#121417; padding:14px; border-radius:8px; white-space:pre-wrap; min-height:48px; }
+.row { display:flex; gap:10px; }
 </style>
 </head>
 <body>
-  <h1>Zestfestian's Translator</h1>
-  <div class="controls">
-    <label>
-      Direction:
-      <select id="direction">
-        <option value="toEnglish">Zestfestian → English</option>
-        <option value="toCustom">English → Zestfestian</option>
-      </select>
-    </label>
+<h1>Zestfestian Translator</h1>
+<div class="controls">
+<label>Direction:
+  <select id="direction">
+    <option value="toEnglish">Zestfestian → English</option>
+    <option value="toCustom">English → Zestfestian</option>
+  </select>
+</label>
 
-    <textarea id="inputText" placeholder="Type text here..."></textarea>
+<textarea id="inputText" placeholder="Type text here..."></textarea>
 
-    <div class="row">
-      <button id="convertBtn">Convert</button>
-      <button id="copyBtn" style="background:#3bd18f;color:#042018;">Copy Output</button>
-    </div>
+<div class="row">
+  <button id="convertBtn">Convert</button>
+  <button id="copyBtn" style="background:#3bd18f;color:#042018;">Copy Output</button>
+</div>
 
-    <div id="output" aria-live="polite"></div>
-  </div>
+<div id="output"></div>
+</div>
 
 <script>
-const customToEnglish = {
-  "A":"la","B":"Z","C":"z","D":"E","E":"le","F":"e","G":"S","H":"s",
-  "I":"li","J":"T","K":"t","L":"F","M":"f","N":"E'","O":"lo","P":"e'",
-  "Q":"S'","R":"s'","S":"T'","T":"t'","U":"lu","V":"Z'","W":"z'",
-  "X":"E''","Y":"e''","Z":"S''"
+const englishToCustom = {
+"A":"la","B":"Z","C":"z","D":"E","E":"le","F":"e","G":"S","H":"s",
+"I":"li","J":"T","K":"t","L":"F","M":"f","N":"E'","O":"lo","P":"e'",
+"Q":"S'","R":"s'","S":"T'","T":"t'","U":"lu","V":"Z'","W":"z'",
+"X":"E''","Y":"e''","Z":"S''"
 };
 
-const englishToCustom = {};
-for (const [c, e] of Object.entries(customToEnglish)) {
-  if (!(e in englishToCustom)) englishToCustom[e] = c;
-}
-
-function buildCaseAwareMap(map) {
-  const out = {};
-  for (const [k, v] of Object.entries(map)) {
-    out[k] = v;
-    const lowerKey = k.toLowerCase();
-    const lowerVal = (typeof v === "string") ? v.toLowerCase() : v;
-    if (lowerKey !== k) out[lowerKey] = lowerVal;
-  }
-  return out;
-}
-
-const customToEnglish_case = buildCaseAwareMap(customToEnglish);
-const englishToCustom_case = buildCaseAwareMap(englishToCustom);
+// Reverse mapping for Zestfestian → English
+const customToEnglish = Object.fromEntries(
+  Object.entries(englishToCustom).map(([eng, cust]) => [cust, eng])
+);
 
 function replaceAllByMap(text, map) {
-  if (!text) return "";
   const keys = Object.keys(map).sort((a,b)=>b.length - a.length);
-  let out = text;
+  let result = text;
   for (const key of keys) {
-    if (!key) continue;
-    const esc = key.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    out = out.replace(new RegExp(esc, "g"), match => {
-      const replacement = map[key];
-      if (replacement.length === 1) {
-        if (match[0] === match[0].toUpperCase()) return replacement.toUpperCase();
-        return replacement.toLowerCase();
-      }
-      if (match[0] === match[0].toUpperCase()) {
-        return replacement.charAt(0).toUpperCase() + replacement.slice(1);
-      }
-      return replacement;
-    });
+    const regex = new RegExp(key, "g");
+    result = result.replace(regex, map[key]);
   }
-  return out;
+  return result;
 }
 
 document.getElementById("convertBtn").addEventListener("click", () => {
   const dir = document.getElementById("direction").value;
-  const input = document.getElementById("inputText").value || "";
-  let result = "";
+  const input = document.getElementById("inputText").value;
+  let output = "";
 
-  if (dir === "toEnglish") {
-    result = replaceAllByMap(input, customToEnglish_case);
+  if (dir === "toCustom") {
+    output = replaceAllByMap(input, englishToCustom);
   } else {
-    result = replaceAllByMap(input, englishToCustom_case);
+    output = replaceAllByMap(input, customToEnglish);
   }
 
-  document.getElementById("output").textContent = result;
+  document.getElementById("output").textContent = output;
 });
-
-document.getElementById("convertBtn").click();
 </script>
 </body>
 </html>
