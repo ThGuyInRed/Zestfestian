@@ -13,7 +13,6 @@
   button { background:#7fd1ff; color:#031018; font-weight:700; cursor:pointer; }
   #output { margin-top:14px; width:100%; max-width:720px; background:#121417; padding:14px; border-radius:8px; white-space:pre-wrap; min-height:48px; }
   .row { display:flex; gap:10px; }
-  .small { width:48%; }
 </style>
 </head>
 <body>
@@ -27,7 +26,8 @@
       </select>
     </label>
 
-    <textarea id="inputText" placeholder="Type text here..."/textarea>
+    <textarea id="inputText" placeholder="Type text here..."></textarea>
+
     <div class="row">
       <button id="convertBtn">Convert</button>
       <button id="copyBtn" style="background:#3bd18f;color:#042018;">Copy Output</button>
@@ -60,10 +60,8 @@ function buildCaseAwareMap(map) {
   return out;
 }
 
-const CT E = customToEnglish; // (typo guard removed)
 const customToEnglish_case = buildCaseAwareMap(customToEnglish);
 const englishToCustom_case = buildCaseAwareMap(englishToCustom);
-
 
 function replaceAllByMap(text, map) {
   if (!text) return "";
@@ -72,7 +70,7 @@ function replaceAllByMap(text, map) {
   for (const key of keys) {
     if (!key) continue;
     const esc = key.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    out = out.replace(new RegExp(esc, "g"), function(match) {
+    out = out.replace(new RegExp(esc, "g"), match => {
       const replacement = map[key];
       if (replacement.length === 1) {
         if (match[0] === match[0].toUpperCase()) return replacement.toUpperCase();
@@ -101,19 +99,8 @@ document.getElementById("convertBtn").addEventListener("click", () => {
   document.getElementById("output").textContent = result;
 });
 
-document.getElementById("copyBtn").addEventListener("click", async () => {
-  const txt = document.getElementById("output").textContent;
-  if (!txt) return;
-  try {
-    await navigator.clipboard.writeText(txt);
-    document.getElementById("copyBtn").textContent = "Copied!";
-    setTimeout(()=> document.getElementById("copyBtn").textContent = "Copy Output", 1200);
-  } catch (e) {
-    alert("Copy failed — here's the output:\n\n" + txt);
-  }
-});
-
 document.getElementById("convertBtn").click();
 </script>
 </body>
 </html>
+
