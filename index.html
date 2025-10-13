@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language ↔ English Converter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+  }
+  h1 {
+    color: #76c7ff;
+    margin-bottom: 10px;
+  }
+  select, textarea, button {
+    margin-top: 10px;
+    width: 80%;
+    max-width: 500px;
+  }
+  select, textarea {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+  }
+  textarea {
+    height: 120px;
+  }
+  button {
+    background: #76c7ff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  button:hover {
+    background: #5bb4f0;
+  }
+  #output {
+    margin-top: 20px;
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    font-size: 18px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+</style>
+</head>
+<body>
+
+<h1>Language ↔ English Converter</h1>
+<p>Select direction and enter text below:</p>
+
+<select id="direction">
+  <option value="toEnglish">Custom → English</option>
+  <option value="toCustom">English → Custom</option>
+</select>
+
+<textarea id="inputText" placeholder="Type your text here..."></textarea>
+<button onclick="convertText()">Convert</button>
+
+<div id="output"></div>
+
+<script>
+  const dictionary = {
+    "A": "la", "B": "Z", "C": "z", "D": "E", "E": "le", "F": "e", "G": "S", "H": "s",
+    "I": "li", "J": "T", "K": "t", "L": "F", "M": "f", "N": "E'", "O": "lo", "P": "e'",
+    "Q": "S'", "R": "s'", "S": "T'", "T": "t'", "U": "lu", "V": "Z'", "W": "z'",
+    "X": "E''", "Y": "e''", "Z": "S''"
+  };
+
+  // Reverse mapping for the other direction
+  const reversed = Object.fromEntries(Object.entries(dictionary).map(([eng, custom]) => [custom, eng]));
+
+  function convertText() {
+    const direction = document.getElementById("direction").value;
+    const input = document.getElementById("inputText").value;
+    let output = input;
+
+    // Pick the correct dictionary
+    let mapping = direction === "toEnglish" ? reversed : dictionary;
+
+    // Sort keys by length for multi-character symbols like E' or S''
+    const keys = Object.keys(mapping).sort((a, b) => b.length - a.length);
+
+    keys.forEach(key => {
+      const regex = new RegExp(key.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1"), "g");
+      output = output.replace(regex, mapping[key]);
+    });
+
+    document.getElementById("output").textContent = output;
+  }
+</script>
+
+</body>
+</html>
