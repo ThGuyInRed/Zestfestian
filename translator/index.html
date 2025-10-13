@@ -4,15 +4,82 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zestfestian Translator</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial, sans-serif; background:#097969; color:#097969; display:flex; flex-direction:column; align-items:center; padding:36px; }
-h1 { color:#9FE2BF; margin-bottom:8px; }
-.controls { width:100%; max-width:720px; }
-select, textarea, button { width:100%; font-size:16px; padding:10px; border-radius:8px; border:none; margin-top:10px; box-sizing:border-box; }
-textarea { height:140px; resize:vertical; }
-button { background:#7fd1ff; color:#031018; font-weight:700; cursor:pointer; }
-#output { margin-top:14px; width:100%; max-width:720px; background:#121417; padding:14px; border-radius:8px; white-space:pre-wrap; min-height:48px; }
-.row { display:flex; gap:10px; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #e8f5e9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px;
+}
+
+h1 {
+    color: #4CAF50;
+    margin-bottom: 16px;
+}
+
+.controls {
+    width: 100%;
+    max-width: 720px;
+}
+
+select, textarea, button {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #4CAF50;
+    margin-top: 10px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+textarea {
+    height: 140px;
+    resize: vertical;
+}
+
+button {
+    background: #4CAF50;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+#copyBtn {
+    background: #9FE2BF;
+    color: #031018;
+}
+
+#copyBtn:hover {
+    background: #87d3a7;
+}
+
+#output {
+    margin-top: 14px;
+    width: 100%;
+    max-width: 720px;
+    background: #c8e6c9;
+    padding: 14px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    min-height: 48px;
+    color: #031018;
+    font-weight: 500;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
 </style>
 </head>
 <body>
@@ -29,14 +96,13 @@ button { background:#7fd1ff; color:#031018; font-weight:700; cursor:pointer; }
 
 <div class="row">
   <button id="convertBtn">Convert</button>
-  <button id="copyBtn" style="background:#3bd18f;color:#042018;">Copy Output</button>
+  <button id="copyBtn">Copy Output</button>
 </div>
 
 <div id="output"></div>
 </div>
 
 <script>
-// Consonant mapping
 const consonantMap = {
 "B":"Z","C":"z","D":"E","F":"e","G":"S","H":"s",
 "J":"T","K":"t","L":"F","M":"f","N":"E'","P":"e'",
@@ -44,14 +110,11 @@ const consonantMap = {
 "X":"E''","Y":"e''","Z":"S''"
 };
 
-// Vowel mapping (lowercase prefix 'l')
 const vowels = {"A":"la","E":"le","I":"li","O":"lo","U":"lu"};
 
-// Reverse maps
 const consonantReverse = Object.fromEntries(Object.entries(consonantMap).map(([k,v])=>[v,k]));
 const vowelReverse = Object.fromEntries(Object.entries(vowels).map(([k,v])=>[v.toLowerCase(),k]));
 
-// Convert English → Zestfestian
 function englishToZestfestian(text){
   let result = "";
   for(const char of text){
@@ -63,23 +126,19 @@ function englishToZestfestian(text){
   return result;
 }
 
-// Convert Zestfestian → English
 function zestfestianToEnglish(text){
   let result = "";
   let i = 0;
   while(i < text.length){
-    // Check 3-char consonant tokens first
     let matched = false;
     for(let len=3; len>0; len--){
       const token = text.slice(i,i+len);
-      // Vowel check
       if(token.length===2 && token[0]==='l' && 'aeiou'.includes(token[1])){
         result += vowelReverse[token];
         i += 2;
         matched = true;
         break;
       }
-      // Consonant check
       if(token in consonantReverse){
         result += consonantReverse[token];
         i += len;
@@ -95,7 +154,7 @@ function zestfestianToEnglish(text){
   return result;
 }
 
-// Event listener
+
 document.getElementById("convertBtn").addEventListener("click", ()=>{
   const dir = document.getElementById("direction").value;
   const input = document.getElementById("inputText").value;
@@ -105,7 +164,6 @@ document.getElementById("convertBtn").addEventListener("click", ()=>{
   document.getElementById("output").textContent = output;
 });
 
-// Copy button
 document.getElementById("copyBtn").addEventListener("click", ()=>{
   navigator.clipboard.writeText(document.getElementById("output").textContent);
 });
