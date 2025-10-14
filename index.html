@@ -14,23 +14,32 @@
 }
 
 body {
+  background-color: #0E0E1A;
+  color: #ffffff;
   line-height: 1.6;
-  background: linear-gradient(180deg, #F0FFFF 0%, #89CFF0 100%);
-  color: #fff;
 }
 
-/* Header */
+/* HEADER */
 header {
-  background-color: #5C29A6;
-  color: white;
-  padding: 20px 0;
+  background: linear-gradient(90deg, #6A0DAD, #3A0CA3);
+  color: #fff;
+  padding: 25px 0;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+header h1 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+nav {
+  margin-top: 10px;
 }
 
 nav a {
-  color: #E5D8FF;
-  margin: 0 15px;
+  color: #D5B8FF;
+  margin: 0 18px;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
@@ -40,96 +49,96 @@ nav a:hover {
   color: #FFFFFF;
 }
 
-/* Hero Section */
+/* HERO */
 .hero {
-  background: linear-gradient(45deg, #6E5ED1, #A47BFF);
-  padding: 80px 20px;
+  background: linear-gradient(135deg, #3A0CA3, #7209B7);
+  padding: 100px 20px;
   text-align: center;
-  color: white;
 }
 
 .hero h1 {
-  font-size: 3em;
-  margin-bottom: 15px;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
-}
-
-.hero p, .hero h4 {
-  font-size: 0.9em;
+  font-size: 3rem;
   margin-bottom: 10px;
-  color: #E0E0E0;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
-/* General Sections */
+.hero p, .hero h3 {
+  color: #D0C4FF;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+/* SECTION */
 .section {
-  padding: 50px 20px;
+  padding: 60px 20px;
   text-align: center;
-  background: linear-gradient(180deg, #F0FFFF 0%, #89CFF0 100%);
+  background: #1C1C2A;
+}
+
+.section:nth-of-type(even) {
+  background: #23233A;
 }
 
 .section h2 {
-  margin-bottom: 15px;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  color: #A884FF;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
 }
 
 .section p {
-  color: #EDE9FF;
-  max-width: 800px;
+  color: #E3DAFF;
+  max-width: 750px;
   margin: 10px auto;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
-/* Decorative dividers */
+/* FILLER (divider line) */
 .filler {
-  background: linear-gradient(45deg, #6A49C9, #4E64D1, #6A49C9);
-  padding: 10px;
-  text-align: center;
+  height: 4px;
+  background: linear-gradient(90deg, #7209B7, #4361EE, #7209B7);
+  border: none;
 }
 
-/* Word of the Day */
+/* WORD BOX */
 #word-of-the-day {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(45deg, #5634C9, #8E5AF2);
+  background: linear-gradient(135deg, #480CA8, #560BAD);
 }
 
 .word-box {
-  background: #7A4CFF;
-  border: 2px solid #4A2BA3;
+  background: #2E1E60;
+  border: 2px solid #9D4EDD;
   border-radius: 12px;
-  padding: 20px 30px;
-  margin-top: 20px;
+  padding: 25px 40px;
+  margin-top: 25px;
   display: inline-block;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(157,78,221,0.4);
 }
 
 .word-box p {
-  color: #FFFFFF;
+  color: #FFF;
+  font-size: 1.1rem;
 }
 
 #zestfestian-word {
   color: #B5F5FF !important;
   font-weight: 600;
+  font-size: 1.2rem;
 }
 
-/* Footer */
+/* FOOTER */
 footer {
-  background-color: #333;
-  color: white;
-  padding: 20px 0;
+  background-color: #111;
+  color: #bbb;
+  padding: 25px 0;
   text-align: center;
+  font-size: 0.9rem;
+  border-top: 2px solid #3A0CA3;
 }
 
-footer a {
-  color: #B58BFF;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-footer a:hover {
-  text-decoration: underline;
+footer p:last-child {
+  color: #888;
+  margin-top: 5px;
 }
 </style>
 </head>
@@ -142,9 +151,7 @@ footer a:hover {
     <a href="/translator">Translator</a>
   </nav>
 </header>
-  
-<section class="filler"></section>
-  
+
 <section class="hero">
   <h1>S''leT't'eleT't'lilaE' FlaE'SlulaSle</h1>
   <p>(Zestfestian Language)</p>
@@ -152,16 +159,16 @@ footer a:hover {
   <p>(7 Kids Came Up With This Language)</p>
 </section>
 
-<section class="filler"></section>
-  
+<hr class="filler">
+
 <section class="section">
   <h2>About Zestfestian</h2>
   <p>Zestfestian is a language made by 7 kids from South-East England. It's not meant to be spoken, but actually meant to be typed. Below is the basic info you'll need to write in Zestfestian.</p>
   <p>The Translator is available using the menu at the top of our website.</p>
 </section>
-    
-<section class="filler"></section>
-    
+
+<hr class="filler">
+
 <section class="section" id="word-of-the-day">
   <h2>Random Word (For You)</h2>
   <div class="word-box">
@@ -207,7 +214,7 @@ async function loadWordOfTheDay(){
 loadWordOfTheDay();
 </script>
 
-<section class="filler"></section>
+<hr class="filler">
 
 <section class="section">
   <h2>How do you speak Zestfestian?</h2>
@@ -217,12 +224,4 @@ loadWordOfTheDay();
   <p>All letters of the alphabet correspond to their English counterpart in the Latin alphabet.</p>
 </section>
 
-<section class="filler"></section>
-    
-<footer>
-  <p>2025 S''leT't'eleT't' Ss'lolue' zslat'. z'leZT'lit'le zloEleE Ze'' loE'le loe t'sle 7 tliET'.</p>
-  <p>2025 Zest Fest Group Chat. Coded by One of the 7 Kids.</p>
-</footer>
-
-</body>
-</html>
+<footer
