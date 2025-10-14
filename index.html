@@ -109,13 +109,49 @@ footer a {
     
 </section>
     
-<section class="section">
-  <h2>Random Word</h2>
-  <div class="word-box">
-    <p><strong>English:</strong> <span id="englishWord"></span></p>
-    <p><strong>Zestfestian:</strong> <span id="zestfestianWord"></span></p>
-  </div>
+<section class="section" id="word-of-the-day">
+  <h2>Word of the Day</h2>
+  <p id="english-word">Loading...</p>
+  <p id="zestfestian-word" style="color:#4CAF50;font-weight:600;"></p>
 </section>
+
+<script>
+const consonantMap = {
+  "B":"Z","C":"z","D":"E","F":"e","G":"S","H":"s",
+  "J":"T","K":"t","L":"F","M":"f","N":"E'","P":"e'",
+  "Q":"S'","R":"s'","S":"T'","T":"t'","V":"Z'","W":"z'",
+  "X":"E''","Y":"e''","Z":"S''"
+};
+const vowels = {"A":"la","E":"le","I":"li","O":"lo","U":"lu"};
+
+function englishToZestfestian(text){
+  let result = "";
+  for(const char of text){
+    const upper = char.toUpperCase();
+    if(upper in vowels) result += vowels[upper];
+    else if(upper in consonantMap) result += consonantMap[upper];
+    else result += char;
+  }
+  return result;
+}
+
+async function loadWordOfTheDay(){
+  try {
+    const res = await fetch("https://random-word-api.herokuapp.com/word");
+    const data = await res.json();
+    const word = data[0];
+    const zestfestianWord = englishToZestfestian(word);
+    document.getElementById("english-word").textContent = `English: ${word}`;
+    document.getElementById("zestfestian-word").textContent = `Zestfestian: ${zestfestianWord}`;
+  } catch (err) {
+    document.getElementById("english-word").textContent = "Error fetching word.";
+    console.error(err);
+  }
+}
+
+loadWordOfTheDay();
+</script>
+
 
 <section class="hero">
     
@@ -138,33 +174,7 @@ footer a {
   <p>2025 Zest Fest Group Chat. Coded by One of the 7 Kids.</p>
 </footer>
 
-<script>
-const consonantMap = {
-  "B":"Z","C":"z","D":"E","F":"e","G":"S","H":"s",
-  "J":"T","K":"t","L":"F","M":"f","N":"E'","P":"e'",
-  "Q":"S'","R":"s'","S":"T'","T":"t'","V":"Z'","W":"z'",
-  "X":"E''","Y":"e''","Z":"S''"
-};
 
-const vowels = {"A":"la","E":"le","I":"li","O":"lo","U":"lu"};
-
-function englishToZestfestian(text) {
-  let result = "";
-  for (const char of text.toUpperCase()) {
-    if (vowels[char]) result += vowels[char];
-    else if (consonantMap[char]) result += consonantMap[char];
-    else result += char;
-  }
-  return result;
-}
-
-const wordList = ["dream", "forest", "light", "music", "journey", "peace", "friend", "future", "rain", "river", "star", "sun", "sky", "flower", "energy", "planet", "story", "shadow", "cloud", "spark"];
-const englishWord = wordList[Math.floor(Math.random() * wordList.length)];
-const zestfestianWord = englishToZestfestian(englishWord);
-
-document.getElementById("englishWord").textContent = englishWord;
-document.getElementById("zestfestianWord").textContent = zestfestianWord;
-</script>
 
 </body>
 </html>
