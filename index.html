@@ -15,19 +15,21 @@
 
 body {
   line-height: 1.6;
-  background-color: #E0E0FF;
-  color: #333;
+  background: linear-gradient(180deg, #5A4FCF 0%, #3D3BB2 100%);
+  color: #fff;
 }
 
+/* Header */
 header {
-  background-color: #9D6ACC;
+  background-color: #5C29A6;
   color: white;
   padding: 20px 0;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 nav a {
-  color: white;
+  color: #E5D8FF;
   margin: 0 15px;
   text-decoration: none;
   font-weight: 600;
@@ -35,55 +37,84 @@ nav a {
 }
 
 nav a:hover {
-  color: #E3D4FF;
+  color: #FFFFFF;
 }
 
+/* Hero Section */
 .hero {
-  background: linear-gradient(45deg, #A6C2FF, #C285FF);
+  background: linear-gradient(45deg, #6E5ED1, #A47BFF);
   padding: 80px 20px;
   text-align: center;
+  color: white;
 }
 
 .hero h1 {
   font-size: 3em;
   margin-bottom: 15px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
 }
 
 .hero p, .hero h4 {
   font-size: 0.9em;
   margin-bottom: 10px;
-  color: #555;
+  color: #E0E0E0;
 }
 
+/* General Sections */
 .section {
   padding: 50px 20px;
   text-align: center;
+  background: linear-gradient(45deg, #5B4FC2, #7E5EF2);
 }
 
+.section h2 {
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+.section p {
+  color: #EDE9FF;
+  max-width: 800px;
+  margin: 10px auto;
+  line-height: 1.6;
+}
+
+/* Decorative dividers */
 .filler {
-  background: linear-gradient(45deg, #A77DD1, #7D99D1, #A77DD1);
-  padding: 5px 5px;
+  background: linear-gradient(45deg, #6A49C9, #4E64D1, #6A49C9);
+  padding: 10px;
   text-align: center;
 }
 
+/* Word of the Day */
 #word-of-the-day {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: linear-gradient(45deg, #5634C9, #8E5AF2);
 }
 
 .word-box {
-  background: #BA6BFF;
-  border: 2px solid #6700C2;
+  background: #7A4CFF;
+  border: 2px solid #4A2BA3;
   border-radius: 12px;
   padding: 20px 30px;
   margin-top: 20px;
   display: inline-block;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
+.word-box p {
+  color: #FFFFFF;
+}
 
+#zestfestian-word {
+  color: #B5F5FF !important;
+  font-weight: 600;
+}
+
+/* Footer */
 footer {
   background-color: #333;
   color: white;
@@ -92,9 +123,13 @@ footer {
 }
 
 footer a {
-  color: #4CAF50;
+  color: #B58BFF;
   text-decoration: none;
   margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
 </style>
 </head>
@@ -108,9 +143,7 @@ footer a {
   </nav>
 </header>
   
-<section class="filler">
-
-  </section>
+<section class="filler"></section>
   
 <section class="hero">
   <h1>S''leT't'eleT't'lilaE' FlaE'SlulaSle</h1>
@@ -119,9 +152,7 @@ footer a {
   <p>(7 Kids Came Up With This Language)</p>
 </section>
 
-<section class="filler">
-    
-</section>
+<section class="filler"></section>
   
 <section class="section">
   <h2>About Zestfestian</h2>
@@ -129,15 +160,13 @@ footer a {
   <p>The Translator is available using the menu at the top of our website.</p>
 </section>
     
-<section class="filler">
-    
-</section>
+<section class="filler"></section>
     
 <section class="section" id="word-of-the-day">
   <h2>Random Word (For You)</h2>
   <div class="word-box">
     <p id="english-word">Loading...</p>
-    <p id="zestfestian-word" style="color:#2e7d32;font-weight:600;"></p>
+    <p id="zestfestian-word"></p>
   </div>
 </section>
 
@@ -178,30 +207,22 @@ async function loadWordOfTheDay(){
 loadWordOfTheDay();
 </script>
 
-
-<section class="filler">
-    
-</section>
+<section class="filler"></section>
 
 <section class="section">
   <h2>How do you speak Zestfestian?</h2>
   <p>Zestfestian is a language that’s alphabet is made up of ZzEeSsTtFfE’e’S’s’T’t’Z’z’E’’e’’S’’ as the consonants and the vowels being L and then the corresponding vowel (e.g La, Lo).</p>
-  <p>   </p>
   <p>This means the alphabet is:</p>
   <p>la, Z, z, E, le, e, S, s, li, T, t, F, f. E’, lo, e’, S’, s’, T’, t’, lu, Z’, z’, E’’, e’’, S’’.</p>
   <p>All letters of the alphabet correspond to their English counterpart in the Latin alphabet.</p>
 </section>
 
-<section class="filler">
-    
-</section>
+<section class="filler"></section>
     
 <footer>
   <p>2025 S''leT't'eleT't' Ss'lolue' zslat'. z'leZT'lit'le zloEleE Ze'' loE'le loe t'sle 7 tliET'.</p>
   <p>2025 Zest Fest Group Chat. Coded by One of the 7 Kids.</p>
 </footer>
-
-
 
 </body>
 </html>
